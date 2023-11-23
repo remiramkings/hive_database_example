@@ -1,9 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:hive_project/audio_player_ui.dart';
+import 'package:hive_project/custom_audio_player.dart';
 import 'package:hive_project/data_service.dart';
 import 'package:hive_project/user_details.dart';
 import 'package:hive_project/user_form.dart';
+import 'package:hive_project/video_player.dart';
 
 class UserItem extends StatefulWidget {
   Map<dynamic, dynamic> userDetails;
@@ -18,6 +20,7 @@ class UserItem extends StatefulWidget {
 }
 
 class _UserItemState extends State<UserItem> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,9 +81,23 @@ class _UserItemState extends State<UserItem> {
             )
 
           ],),
-          Row(children: [
-            Expanded(child: widget.userDetails['video'] != null? Text('Video path ${widget.userDetails['video']}') : const Text(''))
-          ],)
+          // Row(children: [
+          //   Expanded(child: widget.userDetails['audio'] != null? Text('Video path ${widget.userDetails['audio']}') : const Text(''))
+          // ],),
+          const SizedBox(height: 10),
+          TextButton(onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => VideoPlayerScreen(filePath: widget.userDetails['video'])),
+            );
+          }, child: const Text('Play video')),
+
+          TextButton(onPressed: (){
+            Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => AudioplayerUI(userDetails: widget.userDetails)),
+  );
+          }, child: const Text('Play audio'))
 
         ],
       )

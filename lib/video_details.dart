@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_project/image_video_conversion_service.dart';
 import 'package:hive_project/media_data_service.dart';
 import 'dart:io';
 
@@ -13,6 +14,7 @@ class VideoDetails extends StatefulWidget {
 
 class _VideoDetailsState extends State<VideoDetails> {
   Map<dynamic, dynamic>? vidDetails;
+  String? videoPath;
 
   void initState() {
     super.initState();
@@ -20,10 +22,11 @@ class _VideoDetailsState extends State<VideoDetails> {
   }
 
   getVideoDetails() async {
-    var d = await MediaDataService.getInstance().getValues(widget.videoPath);
+    var vid = await MediaDataService.getInstance().getValues(widget.videoPath);
+    var path = await ImageVideoConversionService.getInstance().base64toFileConversion(vid?['media']);
     setState(() {
-      vidDetails = d;
-      print(vidDetails);
+      vidDetails = vid;
+      videoPath = path;
     });
   }
   

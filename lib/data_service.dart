@@ -32,7 +32,7 @@ class DataService {
     return await collection.openBox('users');
   }
 
-  setValues(String name, int age, String qualification, String address, String? imagePath, String? videoPath) async {
+  setValues(String name, int age, String qualification, String address, String? imagePath, String? videoPath, String? audioPath) async {
     final usersBox = await getUsersBox();
     await usersBox.put(name, {
       'name': name,
@@ -40,7 +40,8 @@ class DataService {
       'qualification': qualification,
       'address': address,
       'image':imagePath,
-      'video' :videoPath
+      'video' :videoPath,
+      'audio': audioPath
     });
   }
 

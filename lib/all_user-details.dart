@@ -4,6 +4,7 @@ import 'package:hive_project/data_service.dart';
 import 'package:hive_project/user_form.dart';
 import 'package:hive_project/user_item.dart';
 
+
 class AllUserDetails extends StatefulWidget {
   const AllUserDetails({super.key});
 
@@ -33,7 +34,7 @@ class AllUserDetailsState extends State<AllUserDetails> {
 
     return Scaffold(
       body: Container(
-        padding: const                     EdgeInsets.only(top: 50),
+        padding: const EdgeInsets.only(top: 50),
         child: Column(
           
           children: [

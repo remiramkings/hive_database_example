@@ -20,4 +20,10 @@ class ImageVideoConversionService{
     String base64String = base64.encode(mediaBytes);
     MediaDataService.getInstance().setValues(path, base64String);
   }
+
+  Future<String> base64toFileConversion(String base64) async{
+    Uint8List decodedbytes =base64Decode(base64);
+    File decodedimgfile = await File("video.mp3").writeAsBytes(decodedbytes);
+    return decodedimgfile.path;
+  }
 }

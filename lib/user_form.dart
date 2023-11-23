@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_project/all_user-details.dart';
 import 'package:hive_project/data_service.dart';
@@ -27,6 +27,7 @@ class UserForm extends StatefulWidget {
 class _UserFormState extends State<UserForm> {
   XFile? galleryImage;
   XFile? galleryVideo;
+  String? audioFilePath;
 
   TextEditingController name = TextEditingController();
   TextEditingController age = TextEditingController();
@@ -58,6 +59,16 @@ class _UserFormState extends State<UserForm> {
     var video = await imagePicker.pickVideo(source: ImageSource.gallery);
     setState(() {
       galleryVideo = video;
+    });
+  }
+
+  uploadAudio() async{
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.audio,
+      allowMultiple: false
+    );
+    setState(() {
+      audioFilePath = result?.files.first.path;
     });
   }
 
@@ -109,6 +120,7 @@ class _UserFormState extends State<UserForm> {
               const SizedBox(height: 30),
               TextButton(onPressed: uploadVideo, child: const Text('Upload video')),
               const SizedBox(height: 30),
+              TextButton(onPressed: uploadAudio, child: const Text('Upload audio')),
               ElevatedButton(
                   onPressed: () async {
                     await DataService.getInstance().setValues(
@@ -117,7 +129,8 @@ class _UserFormState extends State<UserForm> {
                         qualification.text,
                         address.text,
                         galleryImage?.path,
-                        galleryVideo?.path);
+                        galleryVideo?.path,
+                        audioFilePath);
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => UserDetails(name: name.text),
